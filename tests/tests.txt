@@ -1,0 +1,4 @@
+python ./test.py
+python ./testwalk.py
+ipy -X:FullFrames ./test.py
+ipy -X:FullFrames ./testwalk.py
