@@ -32,5 +32,9 @@ Example:
 
 """
 
+
+__version__ = "1.0.0"
+
+
 from rpws.exceptions import *
 from rpws.server import RevitServer
