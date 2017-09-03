@@ -1,0 +1,36 @@
+Todo list:
+☐ publish to github
+☐ publish to pip
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+    ✔ document module @done(2017-09-03 10:05)
+    ✔ create README.md @done(2017-09-03 10:05)
+    ✔ look pip requirements file @done(2017-09-03 10:05)
+    ✔ document using sphinx and readthedocs.com @done(2017-09-03 10:05)
+    ✔ complete requirements file @done(2017-08-30 10:16)
+    ✔ write downs steps to complete the rpws @done(2017-08-30 14:23)
+    ✔ server properties /serverproperties @done(2017-08-30 14:30)
+    ✔ server root contents /contents @done(2017-08-30 14:30)
+    ✔ folder contents /contents @done(2017-08-30 14:30)
+    ✔ file contents /contents @done(2017-08-30 14:38)
+    ✔ folder dir info /directoryinfo @done(2017-08-30 17:02)
+    ✔ file dir info /directoryinfo @done(2017-08-30 17:02)
+    ✔ model info /modelinfo @done(2017-08-30 17:02)
+    ✔ model history /history @done(2017-09-02 15:55)
+    ✔ model project info /projectinfo @done(2017-08-31 22:00)
+    ✔ get locked childred @done(2017-09-02 16:47)
+    ✔ lock @done(2017-08-31 22:02)
+    ✔ unlock @done(2017-08-31 22:02)
+    ✔ cancel lock @done(2017-08-31 22:02)
+    ✔ unlocked children @done(2017-09-02 16:47)
+    ✔ make folder @done(2017-08-31 22:02)
+    ✔ rename folder or model @done(2017-08-31 22:02)
+    ✔ remove folder @done(2017-08-31 22:02)
+    ✔ delete model @done(2017-08-31 22:02)
+    ✔ copy folder or model @done(2017-08-31 22:02)
+    ✔ move folder or model @done(2017-08-31 22:02)
+    ✔ walk @done(2017-09-02 15:55)
+    ✔ fix date objects @done(2017-09-02 16:24)
+    ✔ rewrite walk() for compatibility with IronPython @done(2017-09-03 09:59)
+    ✔ finish tests @done(2017-09-03 09:59)
