@@ -12,7 +12,7 @@ This is a python module for interacting with Autodesk Revit Server using its RES
 
 ### Installation:
 - for python 3: `pip install rpws`
-- for IronPython 2.7.7: Download this repository and copy the rpws folder to the IronPython `Lib\site-packages` folder.
+- for IronPython 2.7.7: Download this repository and copy the rpws folder to the IronPython `Lib/site-packages` folder.
 
 ### Module Files:
 
@@ -57,7 +57,7 @@ sdriveinfo.drive_freespace
 
 #### Listing All files, folders, and models
 
-Make sure all paths start with root `\`
+Make sure all paths start with root `/`
 
 ``` python
 for parent, folders, files, models in rserver.walk():
@@ -73,33 +73,33 @@ for parent, folders, files, models in rserver.walk():
 #### Locking, unlocking files, folders, and models
 
 ``` python
-rserver.lock(r'\path\to\folder\or\model.rvt')
-rserver.unlock(r'\path\to\folder\or\model.rvt')
+rserver.lock('/path/to/folder/or/model.rvt')
+rserver.unlock('/path/to/folder/or/model.rvt')
 ```
 
 
 #### Create, Move, Copy, Delete
 
 ``` python
-rserver.mkdir(r'\path\to\folder')
+rserver.mkdir('/path/to/folder')
 
-rserver.rename(r'\path\to\folder\or\model.rvt',
-               r'\path\to\folder\or\model2.rvt')
+rserver.rename('/path/to/folder/or/model.rvt',
+               '/path/to/folder/or/model2.rvt')
 
-rserver.rmdir(r'\path\to\folder\')
-rserver.delete(r'\path\to\model.rvt')
+rserver.rmdir('/path/to/folder/')
+rserver.delete('/path/to/model.rvt')
 
-rserver.copy(r'\path\to\folder\or\model.rvt',
-             r'\path\to\folder\or\model2.rvt', overwrite=True)
+rserver.copy('/path/to/folder/or/model.rvt',
+             '/path/to/folder/or/model2.rvt', overwrite=True)
 
-rserver.move(r'\path\to\folder\or\model.rvt',
-             r'\path\to\folder\or\model2.rvt', overwrite=True)
+rserver.move('/path/to/folder/or/model.rvt',
+             '/path/to/folder/or/model2.rvt', overwrite=True)
 ```
 
 #### Getting model history
 
 ``` python
-mhistory = rserver.getmodelhistory(r'\path\to\folder\or\model.rvt')
+mhistory = rserver.getmodelhistory('/path/to/folder/or/model.rvt')
 for hist_item in mhistory.items:
     print(hist_item.user, hist_item.date)
 ```
