@@ -1,7 +1,3 @@
-Welcome to rpws documentation!
-===================================
-
-
 RevitServer
 *****************************
 
