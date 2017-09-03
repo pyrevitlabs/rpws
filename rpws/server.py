@@ -892,7 +892,7 @@ class RevitServer(object):
         parent directory, folders, files, and models
 
         Args:
-            top (str): Parent directory
+            top (str, optional): Parent directory. Root if not provided.
             topdown (bool): True to start from top and walk down
             digmodels (bool): True to list entries under a model folder
                               Revit models on Revit Server are actually folders
