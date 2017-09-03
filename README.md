@@ -21,6 +21,11 @@ This is a python module for interacting with Autodesk Revit Server using its RES
 - `models.py`: Defines classes and namedtuples that wrap the data returned from server http API calls.
 - `server.py`: Defines the server wrapper class. RevitServer class aims to support all the Revit Server http API functionality.
 
+### Documentation:
+
+[Read the documentation here](http://rpws.readthedocs.io/en/latest/#)
+
+&nbsp;
 
 ## Examples:
 
