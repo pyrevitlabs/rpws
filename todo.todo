@@ -1,9 +1,9 @@
-Todo list:
-☐ publish to github
-☐ publish to pip
+
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+    ✔ publish to github @done(2017-09-03 10:27)
+    ✔ publish to pip @done(2017-09-03 10:27)
     ✔ document module @done(2017-09-03 10:05)
     ✔ create README.md @done(2017-09-03 10:05)
     ✔ look pip requirements file @done(2017-09-03 10:05)
