@@ -297,7 +297,7 @@ class RevitServer(object):
                              locks in progress.
 
         Returns:
-            rpws.models.InProgressLockInfo
+            rpws.models.IPLockInfo
         """
 
         locks_list = []
@@ -313,7 +313,7 @@ class RevitServer(object):
 
                 # extract and create in-progress lock info obj
                 locks_list.append(
-                    models.InProgressLockInfo(
+                    models.IPLockInfo(
                         age=ip_lock[api.NODE_LIP_AGE_KEY],
                         lock_options=ip_lock[api.NODE_LIP_LOCKOPTIONS_KEY],
                         lock_type=ip_lock[api.NODE_LIP_LOCKTYPE_KEY],
@@ -430,6 +430,10 @@ class RevitServer(object):
 
         Returns:
             rpws.models.ServerInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> sinfo = rserver.getinfo()
         """
 
         # get properties dict from server on root
@@ -461,6 +465,11 @@ class RevitServer(object):
 
         Returns:
             rpws.models.ServerDriveInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> dinfo = rserver.getdriveinfo()
+            >>> print(dinfo.drive_space)
         """
 
         return self._getserverdriveinfo(self._get(api.REQ_CMD_CONTENTS))
@@ -477,7 +486,12 @@ class RevitServer(object):
                                       Root if not provided.
 
         Returns:
-            rpws.models.EntryInfo
+            rpws.models.EntryContents
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for entry in rserver.scandir('/example/path'):
+            ...     print(entry.path)
         """
 
         # get the entry contents (root if nodepath is none
@@ -495,7 +509,7 @@ class RevitServer(object):
         lock_state = models.LockState(contents_dict[api.NODE_LOCK_STATE_KEY])
         ip_locks = self._getlocks(contents_dict[api.NODE_LOCKS_INPROGRESS_KEY])
 
-        return models.EntryInfo(
+        return models.EntryContents(
             path=nodepath,
             drive_space=sdriveinfo.drive_space,
             drive_freespace=sdriveinfo.drive_freespace,
@@ -521,6 +535,11 @@ class RevitServer(object):
 
         Returns:
             list of rpws.models.FileInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for file in rserver.listfiles('/example/path'):
+            ...     print(file.path)
         """
 
         return self._getfiles(nodepath,
@@ -541,6 +560,11 @@ class RevitServer(object):
 
         Returns:
             list of rpws.models.FolderInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for folder in rserver.listfolders('/example/path'):
+            ...     print(folder.path)
         """
 
         return self._getfolders(nodepath,
@@ -561,6 +585,11 @@ class RevitServer(object):
 
         Returns:
             list of rpws.models.ModelInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     print(model.path)
         """
 
         return self._getmodels(nodepath,
@@ -576,7 +605,13 @@ class RevitServer(object):
             nodepath (str): Path to an entry on the server.
 
         Returns:
-            rpws.models.DirectoryInfo
+            rpws.models.EntryDirInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for folder in rserver.listfolders('/example/path'):
+            ...     finfo = rserver.getfolderinfo(folder.path)
+            ...     print(finfo.date_created)
         """
 
         if nodepath:
@@ -597,7 +632,7 @@ class RevitServer(object):
                 fromrsdatestring(ddict[api.NODE_DIRINFO_DATEMODIFIED_KEY])
 
             # make the directory info obj
-            return models.DirectoryInfo(
+            return models.EntryDirInfo(
                 path=nodepath,
                 name=op.basename(nodepath),
                 size=ddict[api.NODE_DIRINFO_SIZE_KEY],
@@ -624,6 +659,12 @@ class RevitServer(object):
 
         Returns:
             rpws.models.ModelInfoEx
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     minfo = rserver.getmodelinfo(model.path)
+            ...     print(minfo.size)
         """
 
         if nodepath:
@@ -657,7 +698,14 @@ class RevitServer(object):
             nodepath (str): Path to a model on the server.
 
         Returns:
-            rpws.models.ModelHistoryInfo
+            rpws.models.MHistoryInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     mhist = rserver.getmodelhistory(model.path)
+            ...     for hist in mhist.items:
+            ...        print(hist.comment, hist.user)
         """
 
         # get history data from server
@@ -671,7 +719,7 @@ class RevitServer(object):
                 fromrsdatestring(hitem_dict[api.MHISTORY_DATE_KEY])
 
             # make model history item info
-            mhist = models.ModelHistoryItemInfo(
+            mhist = models.MHistoryItemInfo(
                 id=hitem_dict[api.MHISTORY_VERSION_KEY],
                 comment=hitem_dict[api.MHISTORYITEM_COMMENT_KEY],
                 date=mhist_date,
@@ -683,8 +731,8 @@ class RevitServer(object):
             hist_items.append(mhist)
 
         # make model history info obj
-        return models.ModelHistoryInfo(path=mhist_dict[api.MHISTORY_PATH_KEY],
-                                       items=hist_items)
+        return models.MHistoryInfo(path=mhist_dict[api.MHISTORY_PATH_KEY],
+                                   items=hist_items)
 
     def getprojectinfo(self, nodepath):
         """ Returns project info from provided model path
@@ -697,6 +745,13 @@ class RevitServer(object):
 
         Returns:
             rpws.models.ProjectInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     pinfo = rserver.getprojectinfo(model.path)
+            ...     for pparam in pinfo.paramters:
+            ...        print(pparam.name, pparam.value)
         """
 
         param_list = []
@@ -728,7 +783,7 @@ class RevitServer(object):
                         pdatatype = models.ParamDataType.Unknown
 
                     # make the project parameter obj
-                    pparam = models.ProjectParameter(
+                    pparam = models.ProjParameter(
                         name=param.get(api.PARAM_NAME_KEY, ''),
                         value=param.get(api.PARAM_VALUE_KEY, ''),
                         id=param.get(api.PARAM_ID_KEY, ''),
@@ -745,6 +800,11 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a model on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     rserver.lock(model.path)
         """
 
         return self._put(api.REQ_CMD_LOCK, nodepath)
@@ -754,6 +814,11 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a model on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     rserver.cancellock(model.path)
         """
 
         return self._delete(api.REQ_CMD_CANCELLOCK, nodepath)
@@ -763,6 +828,11 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a model on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for model in rserver.listmodels('/example/path'):
+            ...     rserver.unlock(model.path)
         """
 
         return self._delete(api.REQ_CMD_UNLOCK, nodepath)
@@ -778,6 +848,13 @@ class RevitServer(object):
 
         Returns:
             rpws.models.ChildrenLockInfo
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for folder in rserver.listfolders('/example/path'):
+            ...     clockinfo = rserver.getdescendentlocks(folder.path)
+            ...     for locked_model_path in clockinfo.items:
+            ...         print(locked_model_path)
         """
 
         # get decendent lock data
@@ -807,6 +884,11 @@ class RevitServer(object):
 
         Returns:
             list of str for list of entries with failed locks
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for folder in rserver.listfolders('/example/path'):
+            ...     rserver.deletedescendentlocks(folder.path)
         """
 
         # get decendent lock data
@@ -824,6 +906,10 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a dirctory on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.mkdir('/example/path')
         """
 
         return self._put(api.REQ_CMD_MKDIR, nodepath)
@@ -834,6 +920,10 @@ class RevitServer(object):
         Args:
             nodepath (str): Path to a file, folder, or model on the server.
             new_nodename (str): New name for file, folder, or model
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.rename('/example/path', '/example/newpath')
         """
 
         return self._delete(api.REQ_CMD_RENAME.format(new_name=new_nodename),
@@ -844,6 +934,10 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a file, folder, or model on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.rmdir('/example/path')
         """
 
         return self._delete(api.REQ_CMD_DELETE, nodepath)
@@ -853,6 +947,10 @@ class RevitServer(object):
 
         Args:
             nodepath (str): Path to a file, folder, or model on the server.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.delete('/example/path/model.rvt')
         """
 
         return self._delete(api.REQ_CMD_DELETE, nodepath)
@@ -864,6 +962,10 @@ class RevitServer(object):
             nodepath (str): Path to a file, folder, or model on the server.
             new_nodepath (str): Full path to new location and name.
             overwrite (bool): True to overwrite any existing entries.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.copy('/example/model.rvt', '/example/newmodel.rvt')
         """
 
         # get api path for the new location
@@ -879,6 +981,10 @@ class RevitServer(object):
             nodepath (str): Path to a file, folder, or model on the server.
             new_nodepath (str): Full path to new location and name.
             overwrite (bool): True to overwrite any existing entries.
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> rserver.move('/example/model.rvt', '/example/newmodel.rvt')
         """
 
         # get api path for the new location
@@ -900,6 +1006,17 @@ class RevitServer(object):
 
         Returns:
             tuple: (parent, folders, files, models)
+
+        Example:
+            >>> rserver = RevitServer('server01', '2017')
+            >>> for parent, folders, files, models in rserver.walk():
+            ...     print(parent)
+            ...     for fd in folders:
+            ...         print('\t@d {}'.format(fd.path))
+            ...     for f in files:
+            ...         print('\t@f {}'.format(f.path))
+            ...     for m in models:
+            ...         print('\t@m {}'.format(m.path))
         """
 
         if not top:
