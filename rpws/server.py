@@ -311,10 +311,14 @@ class RevitServer(object):
                 ts = models.DateEntry.\
                         fromrsdatestring(ip_lock[api.NODE_LIP_TIMESTAMP_KEY])
 
+                # extract and create timespan obj
+                tspan = models.TimeSpanEntry.\
+                        fromrstimespanstring(ip_lock[api.NODE_LIP_AGE_KEY])
+
                 # extract and create in-progress lock info obj
                 locks_list.append(
                     models.IPLockInfo(
-                        age=ip_lock[api.NODE_LIP_AGE_KEY],
+                        age=tspan,
                         lock_options=ip_lock[api.NODE_LIP_LOCKOPTIONS_KEY],
                         lock_type=ip_lock[api.NODE_LIP_LOCKTYPE_KEY],
                         model_path=ip_lock[api.NODE_LIP_MODELPATH_KEY],

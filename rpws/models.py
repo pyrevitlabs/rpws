@@ -1,3 +1,4 @@
+import re
 from collections import namedtuple
 import datetime
 
@@ -108,7 +109,7 @@ Attributes:
     date_modified (DateEntry): Date entry was last modified
     exists (bool): True if entry exists
     folder_count (int): Number of sub folders
-    is_folder (bool): True of this entry if a directory  
+    is_folder (bool): True of this entry if a directory
     last_modified_by (str): Username of user who last modified the model
     lock_context (str): Lock context on this entry
     lock_state (LockState): Lock state on this entry
@@ -327,7 +328,7 @@ Attributes:
 
 
 IPLockInfo = namedtuple('IPLockInfo',
-                        ['age',                    # type: str
+                        ['age',                    # type: TimeSpanEntry
                          'lock_options',           # type: int
                          'lock_type',              # type: int
                          'model_path',             # type: str
@@ -373,3 +374,28 @@ class DateEntry(datetime.datetime):
     def fromrsdatestring(cls, date_string):
         seconds_since_epoch = int(date_string[6:-2])/1000
         return cls.utcfromtimestamp(seconds_since_epoch)
+
+
+class TimeSpanEntry(datetime.timedelta):
+    """ Timespan data type converting Revit Server timespan to
+    a typical python datetime.timedelta object
+
+    Example:
+        >>> ts = TimeSpanEntry.fromrstimespanstring("PT11M42.5154811S")
+        TimeSpanEntry(0, 5856, 811000)
+
+    """
+    @classmethod
+    def fromrstimespanstring(cls, timespan_string):
+        days = re.findall('(\d+)D', timespan_string)
+        days = int(days[0]) if days else 0
+
+        minutes = re.findall('(\d+)M', timespan_string)
+        minutes = int(minutes[0]) if minutes else 0
+
+        seconds = re.findall('(\d+)\.(\d+)S', timespan_string)
+        seconds, millisecs = (int(seconds[0][0]), int(seconds[0][1])) \
+                             if seconds else (0, 0)
+
+        return cls(days=days, minutes=minutes,
+                   seconds=seconds, milliseconds=millisecs)

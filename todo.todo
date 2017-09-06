@@ -1,6 +1,6 @@
-Figure out in-progress lock age format
-Figure out in-progress lock options format
-Figure out in-progress lock type format
+✔ Figure out in-progress lock age format @done(2017-09-06 09:32)
+☐ Figure out in-progress lock options format, the combination of the model lock options (1-read; 2-write; 128-NonExclusiveReadOrWrite)
+☐ Figure out in-progress lock type format, the type of the model lock (0-data; 1-permissions)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
