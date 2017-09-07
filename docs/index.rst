@@ -26,6 +26,12 @@ Data Models
 .. autoclass:: rpws.models.LockState
 
 
+.. autoclass:: rpws.models.LockOptions
+
+
+.. autoclass:: rpws.models.LockType
+
+
 .. autoclass:: rpws.models.FileInfo
 
 

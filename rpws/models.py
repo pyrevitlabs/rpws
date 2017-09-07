@@ -139,6 +139,32 @@ class LockState(enum.Enum):
     BeingLocked = 5
 
 
+class LockOptions(enum.Enum):
+    """ Enum representing Revit Server lock options
+
+    Attributes:
+        Read = 1
+        Write = 2
+        NonExclusiveReadWrite = 128
+    """
+
+    Read = 1
+    Write = 2
+    NonExclusiveReadWrite = 128
+
+
+class LockType(enum.Enum):
+    """ Enum representing Revit Server lock type
+
+    Attributes:
+        Data = 0
+        Permission = 1
+    """
+
+    Data = 0
+    Permissions = 1
+
+
 FileInfo = namedtuple('FileInfo',
                       ['path',                     # type: str
                        'name',                     # type: str
@@ -329,8 +355,8 @@ Attributes:
 
 IPLockInfo = namedtuple('IPLockInfo',
                         ['age',                    # type: TimeSpanEntry
-                         'lock_options',           # type: int
-                         'lock_type',              # type: int
+                         'lock_options',           # type: LockOptions
+                         'lock_type',              # type: LockType
                          'model_path',             # type: str
                          'timestamp',              # type: DateEntry
                          'username',               # type: str

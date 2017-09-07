@@ -1,13 +1,13 @@
-# Sphinx documentation
+### Sphinx
 docs/_build/
 
-# pyenv
+### pyenv
 .python-version
 
-# dotenv
+### dotenv
 .env
 
-# virtualenv
+### virtualenv
 venv/
 ENV/
 
