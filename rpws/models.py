@@ -145,9 +145,13 @@ class LockOptions(enum.Enum):
     """Enum representing Revit Server lock options.
 
     Attributes:
+        NotSet = 0
         Read = 1
         Write = 2
         NonExclusiveReadWrite = 128
+        ReadAndNonExclusiveReadWrite = 129
+        WriteAndNonExclusiveReadWrite = 130
+        ReadWriteAndNonExclusiveReadWrite = 130
     """
 
     NotSet = 0
