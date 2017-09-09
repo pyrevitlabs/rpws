@@ -150,9 +150,13 @@ class LockOptions(enum.Enum):
         NonExclusiveReadWrite = 128
     """
 
+    NotSet = 0
     Read = 1
     Write = 2
     NonExclusiveReadWrite = 128
+    ReadAndNonExclusiveReadWrite = 129
+    WriteAndNonExclusiveReadWrite = 130
+    ReadWriteAndNonExclusiveReadWrite = 130
 
 
 class LockType(enum.Enum):
