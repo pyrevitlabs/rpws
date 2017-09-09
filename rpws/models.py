@@ -1,3 +1,5 @@
+"""Data structures for wrapping information returned by Revit server."""
+
 import re
 from collections import namedtuple
 import datetime
@@ -30,7 +32,7 @@ Attributes:
 
 
 class ServerRole(enum.Enum):
-    """ Enum representing various server role codes
+    """Enum representing various server role codes.
 
     Attributes:
         Host = 0
@@ -120,7 +122,7 @@ Attributes:
 
 
 class LockState(enum.Enum):
-    """ Enum representing Revit Server lock states
+    """Enum representing Revit Server lock states.
 
     Attributes:
         Unlocked = 0
@@ -140,7 +142,7 @@ class LockState(enum.Enum):
 
 
 class LockOptions(enum.Enum):
-    """ Enum representing Revit Server lock options
+    """Enum representing Revit Server lock options.
 
     Attributes:
         Read = 1
@@ -154,7 +156,7 @@ class LockOptions(enum.Enum):
 
 
 class LockType(enum.Enum):
-    """ Enum representing Revit Server lock type
+    """Enum representing Revit Server lock type.
 
     Attributes:
         Data = 0
@@ -282,7 +284,7 @@ Attributes:
 
 
 class ParamType(enum.Enum):
-    """ Enum representing parameter types
+    """Enum representing parameter types.
 
     Attributes:
         System = 'system'
@@ -298,7 +300,7 @@ class ParamType(enum.Enum):
 
 
 class ParamDataType(enum.Enum):
-    """ Enum representing parameter storage types
+    """Enum representing parameter storage types.
 
     Attributes:
         Length = 'length'
@@ -320,8 +322,8 @@ class ParamDataType(enum.Enum):
 
 
 MHistoryInfo = namedtuple('MHistoryInfo',
-                          ['path',                # type: str
-                           'items',               # type: list<MHistoryItemInfo>
+                          ['path',               # type: str
+                           'items',              # type: list<MHistoryItemInfo>
                            ])
 """ namedtuple for model history info
 
@@ -388,31 +390,45 @@ Attributes:
 
 
 class DateEntry(datetime.datetime):
-    """ Timestamp data type converting Revit Server string timestamps to
-    a typical python datetime.datetime object
+    """Timestamp data type wrapping Revit Server string timestamps.
+
+    Wraps Revit Server string timestamps in a typical python
+    datetime.datetime subclass.
 
     Example:
         >>> ts = DateEntry.fromrsdatestring("/Date(1483465201000)/")
         DateEntry(2017, 1, 3, 17, 40, 1)
-
     """
+
     @classmethod
     def fromrsdatestring(cls, date_string):
+        """Construct a class instance from Revit server timestamp.
+
+        Args:
+            date_string (str): Revit server timestamp string
+        """
         seconds_since_epoch = int(date_string[6:-2])/1000
         return cls.utcfromtimestamp(seconds_since_epoch)
 
 
 class TimeSpanEntry(datetime.timedelta):
-    """ Timespan data type converting Revit Server timespan to
-    a typical python datetime.timedelta object
+    """Timespan data type wrapping Revit Server timespan.
+
+    Wraps Revit Server string timespan in a typical python
+    datetime.timedelta subclass
 
     Example:
         >>> ts = TimeSpanEntry.fromrstimespanstring("PT11M42.5154811S")
         TimeSpanEntry(0, 5856, 811000)
-
     """
+
     @classmethod
     def fromrstimespanstring(cls, timespan_string):
+        """Construct a class instance from Revit server timespan.
+
+        Args:
+            timespan_string (str): Revit server timespan string
+        """
         days = re.findall('(\d+)D', timespan_string)
         days = int(days[0]) if days else 0
 
@@ -421,7 +437,7 @@ class TimeSpanEntry(datetime.timedelta):
 
         seconds = re.findall('(\d+)\.(\d+)S', timespan_string)
         seconds, millisecs = (int(seconds[0][0]), int(seconds[0][1])) \
-                             if seconds else (0, 0)
+            if seconds else (0, 0)
 
         return cls(days=days, minutes=minutes,
                    seconds=seconds, milliseconds=millisecs)
