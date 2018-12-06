@@ -1,3 +1,5 @@
+[![PyPi](https://img.shields.io/pypi/v/rpws.svg)](https://pypi.org/project/rpws)
+
 ## python wrapper for Autodesk Revit Server
 
 This is a python module for interacting with Autodesk Revit Server using its RESTful API. This module depends on python `requests` for handling http requests to the Revit Server.
