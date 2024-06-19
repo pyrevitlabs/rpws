@@ -44,6 +44,13 @@ sroots = {"2012": "/RevitServerAdminRESTService/AdminRESTService.svc",
           "2016": "/RevitServerAdminRESTService2016/AdminRESTService.svc",
           "2017": "/RevitServerAdminRESTService2017/AdminRESTService.svc",
           "2018": "/RevitServerAdminRESTService2018/AdminRESTService.svc",
+          "2019": "/RevitServerAdminRESTService2019/AdminRESTService.svc",
+          "2020": "/RevitServerAdminRESTService2020/AdminRESTService.svc",
+          "2021": "/RevitServerAdminRESTService2021/AdminRESTService.svc",
+          "2022": "/RevitServerAdminRESTService2022/AdminRESTService.svc",
+          "2023": "/RevitServerAdminRESTService2023/AdminRESTService.svc",
+          "2024": "/RevitServerAdminRESTService2024/AdminRESTService.svc",
+          "2025": "/RevitServerAdminRESTService2025/AdminRESTService.svc",
           }
 
 
